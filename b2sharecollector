@@ -8,8 +8,7 @@ if [ -d $APP_DIR ]; then
 		# "run if .success file hasn't been touched in 24h and touch file if successfully run
 		if find "$filename.success" -mmin +1439 |read
 		then
-			source /opt/accounting.client/.env
-			B2SHAREcollector -tv -c $filename
+			B2SHAREcollector -v -c $filename
 			if [ $? -eq 0 ]
 			then
 				touch $filename.success

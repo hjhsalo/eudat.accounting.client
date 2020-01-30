@@ -57,7 +57,8 @@ class Configuration(object):
         self.b2share_url = self.fileparser.get('B2SHARE', 'url')
 
         # Configuration provided with environment variables
-        self.api_token = os.getenv('B2SHARE_SUPERADMIN_API_KEY', None)
+        self.api_token = os.getenv('ACCOUNTING_B2SHARE_SUPERADMIN_API_KEY', None)
+        self.test_mode = os.getenv('ACCOUNTING_TEST_MODE', False)
 
         # create a file handler
         handler = logging.handlers.RotatingFileHandler(self.logfile, \
@@ -126,7 +127,7 @@ class EUDATAccounting(object):
         data = utils.getData(args)
         self.logger.info("Data as query string: " + data)
 
-        if args.test:
+        if args.test or self.conf.test_mode:
             print("Test: Would send the following data: " \
                 + data)
             return None
