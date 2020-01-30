@@ -6,4 +6,7 @@ WORKDIR /opt/accounting.client
 
 RUN pip3 install --no-cache .
 
+ENV ACCOUNTING_TEST_MODE = True
+ENV ACCOUNTING_B2SHARE_SUPERADMIN_API_KEY = ""
+
 CMD ["sh", "-c", "echo \"starting crond\" && (crond) && echo \"tailing...\" && : >> /srv/app/.accounting.log && tail -f /srv/app/.accounting.log"]

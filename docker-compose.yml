@@ -1,8 +1,15 @@
 version: "2"
 services:
     accounting:
-        image: eudat.accounting.client
+        image: eudat.accounting.client:latest
         restart: "unless-stopped"
         volumes:
+            # cronjob collects stats according to these config files
+            # (one per community)
             - "./conf:/srv/app/conf"
-            - "./b2sharecollector:/etc/periodic/hourly/b2sharecollector"
+            # Uncomment to overwrite cronjob in Docker Image
+            # - "./b2sharecollector:/etc/periodic/hourly/b2sharecollector"
+        environment:
+            - "ACCOUNTING_TEST_MODE=True"
+            # - "ACCOUNTING_TEST_MODE=${ACCOUNTING_TEST_MODE}"
+            - "ACCOUNTING_B2SHARE_SUPERADMIN_API_KEY=${ACCOUNTING_B2SHARE_SUPERADMIN_API_KEY}"
